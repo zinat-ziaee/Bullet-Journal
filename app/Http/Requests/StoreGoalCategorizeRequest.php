@@ -31,7 +31,7 @@ class StoreGoalCategorizeRequest extends FormRequest
     public function messages(){
         return [
             'title.required' => 'عنوان را درج کنید',
-            'title.max' => 'حداکثر 255 کاراکتر برای فیلد عنوان '
+                'title.max' => 'حداکثر 255 کاراکتر برای فیلد عنوان '
         ];
     }
 }

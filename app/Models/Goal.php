@@ -18,7 +18,11 @@ class Goal extends Model
         'user_id',
     ];
 
-    public function GoalCat(){
+    public function goalCat(){
         return $this->belongsTo(GoalCategorizes::class,'goal_categorizes_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
     }
 }
