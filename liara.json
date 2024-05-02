@@ -1,0 +1,7 @@
+{
+  "platform": "laravel",
+  "app": "bujo",
+  "laravel": {
+    "phpVersion": "8.0"
+  }
+}
