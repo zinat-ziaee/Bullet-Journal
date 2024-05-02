@@ -15,7 +15,7 @@ class AddUserIdToGoalCategorizes extends Migration
     {
         Schema::table('goal_categorizes', function (Blueprint $table) {
             $table->foreignId('user_id')
-            ->constrained()
+            ->constrained('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });

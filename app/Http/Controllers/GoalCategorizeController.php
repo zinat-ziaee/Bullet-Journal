@@ -17,7 +17,7 @@ class GoalCategorizeController extends Controller
     public function index()
     {
         $goal_categorizes = GoalCategorize::all();
-        return view('goal_categorizes.index',["goal_categorizes"=>$goal_categorizes]);
+        return view('goal_categorizes.index', ["goal_categorizes" => $goal_categorizes]);
     }
 
     /**
@@ -42,7 +42,7 @@ class GoalCategorizeController extends Controller
             'title' => $request->title,
             'user_id' => auth()->user()->id
         ]);
-        return redirect()->route('goal_categorizes.index')->with('success','با موفقیت درج شد');
+        return redirect()->route('goal_categorizes.index')->with('success', 'با موفقیت درج شد');
     }
 
     /**
@@ -65,7 +65,7 @@ class GoalCategorizeController extends Controller
     public function edit($id)
     {
         $goalCat = GoalCategorize::find($id);
-        return view('goal_categorizes.edit',['goalCat' => $goalCat]);
+        return view('goal_categorizes.edit', ['goalCat' => $goalCat]);
     }
 
     /**
@@ -77,8 +77,8 @@ class GoalCategorizeController extends Controller
      */
     public function update(UpdateGoalCategorizeRequest $request, $id)
     {
-        $goalCat = GoalCategorize::whereId($id)->update(['title'=>$request->title]);
-        return redirect()->route('goal_categorizes.index')->with('success','باموفقیت ویرایش شد');
+        $goalCat = GoalCategorize::whereId($id)->update(['title' => $request->title]);
+        return redirect()->route('goal_categorizes.index')->with('success', 'باموفقیت ویرایش شد');
     }
 
     /**
@@ -90,6 +90,6 @@ class GoalCategorizeController extends Controller
     public function destroy($id)
     {
         GoalCategorize::find($id)->delete();
-        return redirect()->route('goal_categorizes.index')->with('success','با موفقیت حذف شد');
+        return redirect()->route('goal_categorizes.index')->with('success', 'با موفقیت حذف شد');
     }
 }

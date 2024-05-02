@@ -1,0 +1,7 @@
+ul {list-style: none}
+.active {
+  background: #c28d91;
+}
+a {
+  text-decoration: none;
+}

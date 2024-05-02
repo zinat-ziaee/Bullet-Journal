@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Goal;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GoalCategorize extends Model
 {
@@ -13,10 +14,7 @@ class GoalCategorize extends Model
      * @var array
      */
     protected $table = 'goal_categorizes';
-    protected $fillable = [
-        'title',
-        'user_id'
-    ];
+    protected $guarded = ['id'];
 
     public function goals()
     {
