@@ -3,24 +3,24 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <h5 class="modal-title" id="infoModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="infoModalLabel">اطلاعات</h5>
       </div>
       <div id="tabs" class="modal-body">
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="note-tab" data-bs-toggle="tab" data-bs-target="#note" type="button" role="tab" aria-controls="note" aria-selected="true">Note</button>
+            <button class="nav-link" id="note-tab" data-bs-toggle="tab" data-bs-target="#note" type="button" role="tab" aria-controls="note" aria-selected="true">یادداشت</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false">Event</button>
+            <button class="nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false">رویداد</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="task-tab" data-bs-toggle="tab" data-bs-target="#task" type="button" role="tab" aria-controls="task" aria-selected="true">Task</button>
+            <button class="nav-link" id="task-tab" data-bs-toggle="tab" data-bs-target="#task" type="button" role="tab" aria-controls="task" aria-selected="true">تسک</button>
           </li>
         </ul>
        
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="note" role="tabpanel" aria-labelledby="note-tab">
+          <div class="tab-pane fade" id="note" role="tabpanel" aria-labelledby="note-tab">
             <x-form.body class="formNode">
               <x-form.text-field type="hidden" name="note_id" id="note_id"/>
               <x-form.text-field name="title" required/>

@@ -11,8 +11,14 @@ class Goal extends Model
   use HasFactory;
 
   protected $table = 'goals';
-  protected $guarded = ['id'];
   protected  $primaryKey = 'id';
+  protected $fillable = [
+    'short_term_goals',
+    'medium_term_goals',
+    'long_term_goals',
+    'goal_categorizes_id',
+    'user_id',
+];
 
 
   public function goalCat()

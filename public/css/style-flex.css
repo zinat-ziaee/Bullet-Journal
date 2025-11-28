@@ -2,57 +2,73 @@
   margin: 10px;
   padding: 10px;
   min-height: 150px;
-  background-color: #007bff;
+  background-color: #f4f6f9;
   /* Flexbox */
   display: flex;
   flex-flow: row wrap;
+  gap: 12px;  
 }
 .container .item {
-  background-color: #f1eded;
-  color: rgb(192, 189, 189);
-  margin: 10px;
-  padding: 10px;
-  min-height: 50px;
+  background-color: #ffffff;
+  color: #333;
+  padding: 16px;
+  border-radius: 12px;  /* گرد */
+  box-shadow: 0 6px 16px rgba(0,0,0,.08);  /* سایه نرم */
+  border: 1px solid rgba(0,0,0,.06);   /* خط خیلی محو */
 }
 .item {
   flex: 1; /*flex-grow: 1;*/
 }
-.item.header {
-  flex: 100%; /*flex-basis: 100%;*/
-}
 .item.aside {
-  flex: 0 200px; /*flex-grow: 0; flex-basis: 200px;*/
+  flex: 0 0 200px; /*flex-grow: 0; flex-basis: 200px;*/
   height: 150px;
 }
 .item.main {
+  background-color: #fff;
   flex: 1 ; /*flex-grow: 1; flex-basis: auto ;*/
+}
+.item.header {
+  flex: 100%;
+  background: #fff;
+  color: #333;
+  padding: 16px 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+.item.header::after {
+  content: "";
+  display: block;
+  margin: 12px auto 0;
+  width: 80%;
+  border-bottom: 2px dotted #ccc;  /* خط نقطه‌ای */
 }
 .item.footer {
   flex: 100%;
+  background: #fafafa;               /* کمی روشن‌تر از هدر */
+  color: #555;                       /* متن خاکستری ملایم */
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  text-align: center;
+  font-size: 14px;
 }
-@media screen and (max-width: 950px) {
-  .item.header {
-    order: 1;
-  }
-  .item.aside {
-    flex: 1 auto;
-  }
-  .item.aside.aside1 {
-    order: 3;
-  }
-  .item.aside.aside2 {
-    order: 4;
-  }
-  .item.main {
-    order: 2;
-    flex: 1 100%;
-  }
-  .item.footer {
-    order: 5;
-  }
+
+@media (max-width: 950px) {
+  .item.header { order: 1; }
+  .item.main   { order: 2; flex: 1 100%; }
+  .item.aside  { order: 3; flex: 1 auto; }
+  .item.footer { order: 4; }
 }
-@media screen and (max-width: 600px) {
+
+@media (max-width: 600px) {
   .item.aside {
-    flex: 100%; /* flex-basis: 100%; as min-width: 100%;*/
+    flex: 100%; /* سایدبار تمام عرض میشه */
   }
 }

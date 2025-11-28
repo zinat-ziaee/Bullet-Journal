@@ -9,30 +9,32 @@
       <div class="form-group">
         <strong>گروه</strong>
         <select name="goal_categorizes_id" class="form-control custom-select">
-          @empty(!$goalCategorizes)
-          @foreach($goalCategorizes as $key=>$value)
-          <option value="{{$key}}" {{($key == $id)?'selected':''}}>{{$value}}</option>
-          @endforeach
-          @endempty
+          @if(!empty($goalCategorizes))
+            @foreach($goalCategorizes as $key=>$value)
+            <option value="{{$key}}" {{ (isset($goal) && $goal->goal_categorizes_id == $key ) ? 'selected' : '' }}>
+              {{$value}}
+            </option>
+            @endforeach
+          @endif
         </select>
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="form-group">
         <strong>اهداف کوتاه مدت</strong>
-        <input type="text" name="short-term-goals" value="{{$goal['short-term-goals']}}" class="form-control" placeholder="اهداف کوتاه مدت">
+        <input type="text" name="short_term_goals" value="{{$goal['short_term_goals']}}" class="form-control" placeholder="اهداف کوتاه مدت">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="form-group">
         <strong>اهداف میان مدت</strong>
-        <input type="text" name="medium-term-goals" value="{{$goal['medium-term-goals']}}" class="form-control" placeholder="اهداف میان مدت">
+        <input type="text" name="medium_term_goals" value="{{$goal['medium_term_goals']}}" class="form-control" placeholder="اهداف میان مدت">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="form-group">
         <strong>اهداف بلند مدت</strong>
-        <input type="text" name="long-term-goals" value="{{$goal['long-term-goals']}}" class="form-control" placeholder="اهداف بلند مدت">
+        <input type="text" name="long_term_goals" value="{{$goal['long_term_goals']}}" class="form-control" placeholder="اهداف بلند مدت">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

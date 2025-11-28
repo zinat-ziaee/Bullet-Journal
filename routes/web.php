@@ -37,8 +37,8 @@ Route::get('/', function () {
 })->middleware('auth')->name('home');
 
 Route::post('/convert_to_shamsi',function(Request $request){
-  $covertMiladiToShansi = Carbon::shamsi($request->date);
-  return response()->json(['covertMiladiToShansi'=>$covertMiladiToShansi]);
+  $covertMiladiToShamsi = Carbon::shamsi($request->date);
+  return response()->json(['covertMiladiToShansi'=>$covertMiladiToShamsi]);
 })->middleware('auth')->name('convert_to_shamsi');
 
 // Route::resource('goal_categorizes', GoalCategorizeController::class, [

@@ -21,7 +21,8 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/persian-date.js') }}"></script> 
   <script src="{{ asset('js/persian-datepicker.js') }}"></script>
-  <script src="{{ asset('js/ful.js') }}" ></script>
+  <script src="{{ asset('js/ful.js') }}" defer></script>
+  
 
   @stack('scripts')
 

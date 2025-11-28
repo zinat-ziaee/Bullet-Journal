@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\Event;
 use App\Models\Collection;
+use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Morilog\Jalali\CalendarUtils;
 
 class EventController extends Controller
 {
@@ -22,8 +23,8 @@ class EventController extends Controller
       ],
       [
         'title' => $request->title,
-        'start' => Carbon::miladi($request->start),
-        'end' => Carbon::miladi($request->end),
+        'start' => $this->isGregorian($request->start)?($request->start):Carbon::miladi($request->start),
+        'end' => $this->isGregorian($request->end)?($request->end):Carbon::miladi($request->end),
         'collection_id' => $request->col_id 
       ]
     );
@@ -34,7 +35,11 @@ class EventController extends Controller
   public function destroy($eventId){
     Event::find($eventId)->delete();
     return response()->json([
-      'success' => 'Record deleted successfully!'
+      'response' => 'Record deleted successfully!'
     ]);
+  }
+
+  private function isGregorian($date){
+    return Carbon::hasFormat($date,'Y-m-d');
   }
 }

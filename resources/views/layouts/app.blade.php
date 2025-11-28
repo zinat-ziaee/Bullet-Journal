@@ -1,6 +1,5 @@
 <!doctype html>
-<html dir="rtl" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'fa' ? 'rtl' : 'ltr' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +17,12 @@
   <link href="{{ asset('css/app2.css') }}" rel="stylesheet">
 
   <!-- yajra css -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+  @if(app()->getLocale() == 'fa')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  @else
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  @endif
+
   <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -29,15 +33,24 @@
   <script src="{{ asset('js/persian-datepicker.js') }}"></script>
   <script src="{{ asset('js/persian-date.js') }}"></script>
   <!-- yajra js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+  <script>
+  setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      const bsAlert = new bootstrap.Alert(alert);
+      bsAlert.close();
+    }
+  }, 3000); // ۳ ثانیه بعد خودش بسته میشه
+  </script>
 
   @stack('scripts')
 
   <!-- Fonts -->
-  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 </head>
 
@@ -63,13 +76,13 @@
             @guest
             @if (Route::has('login'))
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              <a class="nav-link" href="{{ route('login') }}">{{ __('ورود') }}</a>
             </li>
             @endif
 
             @if (Route::has('register'))
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+              <a class="nav-link" href="{{ route('register') }}">{{ __('ثبت نام') }}</a>
             </li>
             @endif
             @else
@@ -105,8 +118,9 @@
     </div>
     @endif
     @if(session('success'))
-    <div class="alert alert-success">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ session('success')}}
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
 

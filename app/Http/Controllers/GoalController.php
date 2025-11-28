@@ -42,9 +42,10 @@ class GoalController extends Controller
    */
   public function store(StoreGoalRequest $request)
   {
+    $data = $request->except('_token'); // حذف توکن از ورودی‌ها
     $userId = Auth::id();
-    $goal = Goal::create(array_merge($request->all(), ['user_id' => $userId]));
-    return redirect()->route('goals.index')->with('success', 'با موفقیت ثبت شد');
+    Goal::create(array_merge($data, ['user_id' => $userId]));
+    return redirect()->route('goals.index')->with('success', 'هدف با موفقیت ایجاد شد');
   }
 
   /**
@@ -83,7 +84,13 @@ class GoalController extends Controller
   {
     $userId = auth::id();
     $goal = Goal::findOrFail($id);
-    $goal->update(array_merge($request->all(), ['user_id' => $userId]));
+    $data = $request->only([
+      'short_term_goals',
+      'medium_term_goals',
+      'long_term_goals',
+    ]);
+    $data['user_id'] = $userId;
+    $goal->update($data);
     return redirect()->route('goals.index')->with('success', 'با موفقیت ویرایش شد');
   }
 

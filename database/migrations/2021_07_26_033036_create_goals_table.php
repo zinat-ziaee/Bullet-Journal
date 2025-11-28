@@ -16,9 +16,9 @@ class CreateGoalsTable extends Migration
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->string('mission');
-            $table->string('short-term-goals');
-            $table->string('medium-term-goals');
-            $table->string('long-term-goals');
+            $table->string('short_term_goals');
+            $table->string('medium_term_goals');
+            $table->string('long_term_goals');
             $table->foreignId('goal_categorizes_id')
                   ->constrained('goal_categorizes')
                   ->onUpdate('cascade')

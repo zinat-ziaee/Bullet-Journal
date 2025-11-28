@@ -4,7 +4,7 @@ namespace App\View\Components\Modal;
 
 use Illuminate\View\Component;
 
-class InfoModal extends Component
+class EventModal extends Component
 {
     /**
      * Create a new component instance.
@@ -25,6 +25,6 @@ class InfoModal extends Component
      */
     public function render()
     {
-        return view('components.modal.info-modal');
+        return view('components.modal.event-modal');
     }
 }

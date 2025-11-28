@@ -9,15 +9,18 @@ class TextField extends Component
 
   public string $name;
   public string $type;
+  public ?string $id;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $name,string $type='text')
+    public function __construct(string $name,string $type='text', ?string $id = null)
     {
         $this->name = $name;
         $this->type = $type;
+         // اگر id داده نشده، خودش از name بسازه
+         $this->id = $id ?? $name;
     }
 
     /**

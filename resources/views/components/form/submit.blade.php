@@ -3,5 +3,5 @@
   'type' => 'submit']) 
   !!}>
   
-  {!! trim($slot) ?: __('Submit') !!}
+  {!! trim($slot) ?: __('ثبت') !!}
 </button>
