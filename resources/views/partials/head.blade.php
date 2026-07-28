@@ -1,4 +1,4 @@
-<meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- CSRF Token -->
@@ -10,7 +10,8 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/main.css') }}" rel='stylesheet'/>
   <link href="{{ asset('css/style-flex.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/persian-datepicker.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css" />
+  <link href="{{ asset('css/majid-datepicker.css') }}" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
 
   <!-- Fonts -->
@@ -20,7 +21,7 @@
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/persian-date.js') }}"></script> 
-  <script src="{{ asset('js/persian-datepicker.js') }}"></script>
+  <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js" ></script>
   <script src="{{ asset('js/ful.js') }}" ></script>
 
   @stack('scripts')

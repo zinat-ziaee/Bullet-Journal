@@ -32,12 +32,12 @@
             <x-form.body class="test">
               <x-form.text-field type="hidden" name="event_id" id="event_id"/>
               <x-form.text-field name="title" required />
-              <x-form.text-field name="start" class="datetimepicker" required>
+              <x-form.text-field   data-jdp data-jdp-only-date name="start" class="datetimepicker" required>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
               </x-form.text-field>
-              <x-form.text-field name="end" class="datetimepicker" required>
+              <x-form.text-field   data-jdp data-jdp-only-date name="end" class="datetimepicker" required>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>

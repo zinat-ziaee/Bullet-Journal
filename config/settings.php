@@ -1,43 +1,16 @@
 <?php
 return [
-  'key' => [
-    1 => [
-      'name' => 'تسک قابل انجام',
-      'image' => ''
-    ],
-    2 => [
-      'name' => 'ملاقات یا جلسات',
-      'image' => ''
-    ],
-    3 => [
-      'name' => 'یادآوری',
-      'image' => ''
-    ],
-    4 => [
-      'name' => 'انجام شده',
-      'image' => ''
-    ],
-    5 => [
-      'name' => 'اولویت',
-      'image' => ''
-    ],
-    6 => [
-      'name' => 'انتقال به آینده',
-      'image' => ''
-    ],
-    7 => [
-      'name' => 'نیمه کاره',
-      'image' => ''
-    ],
-    8 => [
-      'name' => 'کنسل شده',
-      'image' => ''
-    ],
-    'key6' => [
-      'name' => 'یادداشت',
-      'image' => ''
-    ],
-  ],
+ 'key' => [
+    1 => ['name' => 'Task',      'icon' => '•'],
+    2 => ['name' => 'Event',     'icon' => '○'],
+    3 => ['name' => 'Note',      'icon' => '–'],
+    4 => ['name' => 'Completed', 'icon' => '×'],
+    5 => ['name' => 'Priority',  'icon' => '*'],
+    6 => ['name' => 'Migrated',  'icon' => '>'],
+    7 => ['name' => 'Scheduled', 'icon' => '<'],
+    8 => ['name' => 'Cancelled', 'icon' => '✕'],
+  ]
+  ,
   'fixed_collections' => [
     ['route_name' => 'future_log', 'name' => 'آینده نگار'],
     ['route_name' => 'home', 'name' => 'ماه نگار'],

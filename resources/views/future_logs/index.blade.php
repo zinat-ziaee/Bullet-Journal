@@ -5,11 +5,6 @@
 @stop
 
 @section('content')
-<?php
-date_default_timezone_set('Asia/Tehran');
-echo "PHP time: " . date('Y-m-d H:i:s') . "<br>";
-echo "Server timezone: " . date_default_timezone_get();
-?>
 
 <!--  Modal component creation and editing notes,events,tasks  -->
 <x-modal.info-modal id="infoModal" />
@@ -139,36 +134,27 @@ echo "Server timezone: " . date_default_timezone_get();
   $(document).ready(function() {
 
   let collection_id = "{{$info[0]['id']}}";
-  let todayShamsi = "{{ \Morilog\Jalali\Jalalian::now()->format('YYYY-MM-DD') }}";
 
-  // ------------------- INIT DATETIMEPICKER برای همه input ها -------------------
-  $('.datetimepicker').each(function() {
-    $(this).pDatepicker({
-      format: 'YYYY-MM-DD',
-      initialValue: true,
-      autoClose: true,
-      calendar: {
-        persian: {
-          locale: 'fa',
-          leapYearMode: 'algorithmic'
-        }
-      },
-      toolbox: {
-        calendarSwitch: { enabled: false }
-      }
-    });
+  jalaliDatepicker.startWatch({
+      time: false,
+      separatorChars: { date: '-', between: ' ', time: ':' }, // تنظیم جداکننده‌ها
+      persianDigits: true,  // استفاده از اعداد فارسی
+      useDropDownYears: true,
+      autoShow: true,
+      hideAfterChange: true,
+      zIndex: 1060,
   });
 
+  $(document).on('change', function (e) {
+      if (e.target.classList.contains('datetimepicker')) {
+          e.target.value = toPersian(e.target.value);
+      }
+    });
 
-  // --------- FUNCTION TO SET TODAY IN PICKER ---------
-  function setTodayInPicker(selector) {
-    let today = new Date();
-    let persianToday = new persianDate(today);
-    $(selector).pDatepicker('setDate', persianToday);
-  }
-
-
-
+    function toPersian(str) {
+        return str.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    }
+     
   // Creating info in Modal
   $('#infoModal').on('show.bs.modal', function(e) {
     $("#infoModal .nav-link").removeClass('disabled');
@@ -176,19 +162,6 @@ echo "Server timezone: " . date_default_timezone_get();
     createCKEditor('#description2', null);
   });
  
- 
-  // --------- SHOW MODAL AND SET DATE ---------
-  $('.futurelog-event-create-modal').on('click', function() {
-    $('#infoModal').modal('show');
-
-    // ست کردن تاریخ امروز برای start و end
-    setTodayInPicker('#event #start');
-    setTodayInPicker('#event #end');
-
-    // تب Event فعال باشه
-    $("#infoModal .nav-tabs button").addClass('disabled');
-    $('#event-tab').removeClass('disabled').tab('show');
-  });
 
   //Clear form info in modal
   $('#infoModal').on('hidden.bs.modal', function(e) {
@@ -201,12 +174,7 @@ echo "Server timezone: " . date_default_timezone_get();
         .end();
       $('#infoModal .nav-link').removeClass('active');
       $('#infoModal .tab-pane').removeClass('active');
-    })
-  }); 
-
-
-
-
+  })
 
   // function fetchInfo()
   // {
@@ -226,7 +194,6 @@ echo "Server timezone: " . date_default_timezone_get();
   // }
 
   //
-  document.addEventListener('DOMContentLoaded', function() {
       // Getting events from the server
       var data = @json($data); // safe and proper JSON
 
@@ -270,7 +237,7 @@ echo "Server timezone: " . date_default_timezone_get();
           $('#myTabContent .tab-pane').removeClass('show active');
           $('#event').addClass('show active');
 
-          $('#saveEventBtn').off('click').on('click', function(e) {
+          $('#saveBtn').off('click').on('click', function(e) {
             e.preventDefault();
             var formData = $('.test').serializeArray();
             formData.push({
@@ -354,7 +321,6 @@ echo "Server timezone: " . date_default_timezone_get();
       });
 
   console.log('درون تابع', window.calendar);
-  });
   console.log('بیرون تابع', window.calendar);
 
   setTimeout(() => {
@@ -439,7 +405,6 @@ echo "Server timezone: " . date_default_timezone_get();
     });
   };
 
-  $(document).ready(function() {
     var eventDataTable = $('.events-datatable').DataTable();
     var noteDataTable = $('.notes-datatable').DataTable();
     var taskDataTable = $('.tasks-datatable').DataTable();
@@ -650,7 +615,6 @@ echo "Server timezone: " . date_default_timezone_get();
       }
     });
   });
-
 
 </script>
 @endpush
