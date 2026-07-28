@@ -1,0 +1,7 @@
+/* Fix JalaliDatePicker inside Bootstrap Modal */
+.jdp-container,
+.jdp-overlay,
+div[id^="jalaliDatePicker"] {
+    z-index: 1060 !important;
+    position: absolute !important;
+}
