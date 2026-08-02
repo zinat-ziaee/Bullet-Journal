@@ -133,38 +133,42 @@
 
   $(document).ready(function() {
 
-  let collection_id = "{{$info[0]['id']}}";
+    let collection_id = "{{$info[0]['id']}}";
 
-  jalaliDatepicker.startWatch({
+    jalaliDatepicker.startWatch({
       time: false,
-      separatorChars: { date: '-', between: ' ', time: ':' }, // تنظیم جداکننده‌ها
-      persianDigits: true,  // استفاده از اعداد فارسی
+      separatorChars: {
+        date: '-',
+        between: ' ',
+        time: ':'
+      }, // تنظیم جداکننده‌ها
+      persianDigits: true, // استفاده از اعداد فارسی
       useDropDownYears: true,
       autoShow: true,
       hideAfterChange: true,
       zIndex: 1060,
-  });
+    });
 
-  $(document).on('change', function (e) {
+    $(document).on('change', function(e) {
       if (e.target.classList.contains('datetimepicker')) {
-          e.target.value = toPersian(e.target.value);
+        e.target.value = toPersian(e.target.value);
       }
     });
 
     function toPersian(str) {
-        return str.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+      return str.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹' [d]);
     }
-     
-  // Creating info in Modal
-  $('#infoModal').on('show.bs.modal', function(e) {
-    $("#infoModal .nav-link").removeClass('disabled');
-    createCKEditor('#description1', null);
-    createCKEditor('#description2', null);
-  });
- 
 
-  //Clear form info in modal
-  $('#infoModal').on('hidden.bs.modal', function(e) {
+    // Creating info in Modal
+    $('#infoModal').on('show.bs.modal', function(e) {
+      $("#infoModal .nav-link").removeClass('disabled');
+      createCKEditor('#description1', null);
+      createCKEditor('#description2', null);
+    });
+
+
+    //Clear form info in modal
+    $('#infoModal').on('hidden.bs.modal', function(e) {
       $(this)
         .find("input,textarea,select")
         .val('')
@@ -174,236 +178,191 @@
         .end();
       $('#infoModal .nav-link').removeClass('active');
       $('#infoModal .tab-pane').removeClass('active');
-  })
+    })
 
-  // function fetchInfo()
-  // {
-  // $.ajax({
-  //   type:'GET',
-  //   url:'{{route("future_log")}}',
-  //   dataType:'JSON',
-  // success:function(data){
-  // var jsonObj=JSON.parse(JSON.stringify(data.info[0]['events']));
-  // var myJsVar = parseInt(document.querySelector("meta[name=myJsVar]").content);
-  // document.cookie = "myJavascriptVar = "+ jsonObj ;
-  // alert(jsonObj[0].title);
-  // }
-  // });
-  // var x = {!!json_encode($info[0]['events'])!!};
-  // alert(x[5]['title']);
-  // }
+    // function fetchInfo()
+    // {
+    // $.ajax({
+    //   type:'GET',
+    //   url:'{{route("future_log")}}',
+    //   dataType:'JSON',
+    // success:function(data){
+    // var jsonObj=JSON.parse(JSON.stringify(data.info[0]['events']));
+    // var myJsVar = parseInt(document.querySelector("meta[name=myJsVar]").content);
+    // document.cookie = "myJavascriptVar = "+ jsonObj ;
+    // alert(jsonObj[0].title);
+    // }
+    // });
+    // var x = {!!json_encode($info[0]['events'])!!};
+    // alert(x[5]['title']);
+    // }
 
-  //
-      // Getting events from the server
-      var data = @json($data); // safe and proper JSON
+    //
+    // Getting events from the server
+    var data = @json($data); // safe and proper JSON
 
-      var calendarEl = document.getElementById("calendar");
-      // Calendar to display events
-      window.calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fa',
-        direction: 'rtl',
-        firstDay: 6,
-        editable: true,
-        height: 'auto',
-        handleWindowResize: true,
-        selectable: true,
-        events: data,
-        selectable: true,
-        select: function(info) {
-          // پاک کردن مقادیر قبلی
-          $('#event #start').val('');
-          $('#event #end').val('');
+    var calendarEl = document.getElementById("calendar");
+    // Calendar to display events
+    window.calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'fa',
+      direction: 'rtl',
+      firstDay: 6,
+      editable: true,
+      height: 'auto',
+      handleWindowResize: true,
+      selectable: true,
+      events: data,
+      selectable: true,
+      select: function(info) {
+        // پاک کردن مقادیر قبلی
+        $('#event #start').val('');
+        $('#event #end').val('');
 
-          // گرفتن تاریخ شروع و پایان از FullCalendar (میلادی)
-          let startDate = info.startStr;
-          let endDate = info.endStr;
+        // گرفتن تاریخ شروع و پایان از FullCalendar (میلادی)
+        let startDate = info.startStr;
+        let endDate = info.endStr;
 
-          // تبدیل به شمسی و ست کردن داخل inputهای مدال
-          convertToShamsi(startDate).done(function(data) {
-            $('#event #start').val(data.covertMiladiToShansi);
-          });
+        // تبدیل به شمسی و ست کردن داخل inputهای مدال
+        convertToShamsi(startDate).done(function(data) {
+          $('#event #start').val(data.covertMiladiToShansi);
+        });
 
-          convertToShamsi(endDate).done(function(data) {
-            $('#event #end').val(data.covertMiladiToShansi);
-          });
+        convertToShamsi(endDate).done(function(data) {
+          $('#event #end').val(data.covertMiladiToShansi);
+        });
 
-          // باز کردن مدال
-          $('#infoModal').modal('show');
+        // باز کردن مدال
+        $('#infoModal').modal('show');
 
-          // غیر فعال کردن تب‌های دیگر و فعال کردن Event
-          $('#myTab button').removeClass('disabled').attr('disabled', false);
-          $('#myTab button:not(#event-tab)').addClass('disabled').attr('disabled', true);
-          $('#myTabContent .tab-pane').removeClass('show active');
-          $('#event').addClass('show active');
+        // غیر فعال کردن تب‌های دیگر و فعال کردن Event
+        $('#myTab button').removeClass('disabled').attr('disabled', false);
+        $('#myTab button:not(#event-tab)').addClass('disabled').attr('disabled', true);
+        $('#myTabContent .tab-pane').removeClass('show active');
+        $('#event').addClass('show active');
+      },
+      eventClick: function(info) {
+        var id = info.event.id;
 
-          $('#saveBtn').off('click').on('click', function(e) {
-            e.preventDefault();
-            var formData = $('.test').serializeArray();
-            formData.push({
-              name: "col_id",
-              value: collection_id
-            });
-            $.ajax({
-              url: "{{ route('events.store') }}",
-              type: "POST",
-              dateType: 'json',
-              data: formData,
-              success: async function (res) {
-                window.calendar.addEvent({
-                  id: res.events.id,
-                  title: res.events.title,
-                  start: res.events.start,
-                  end: res.events.end
-                }); 
-                //  تبدیل تاریخ‌ها
-                let startShamsi = (await convertToShamsi(res.events.start)).covertMiladiToShansi;
-                let endShamsi = (await convertToShamsi(res.events.end)).covertMiladiToShansi;
-
-
-                // اضافه به دیتاتیبل
-                var table = $('.events-datatable').DataTable();
-                var rowNode = table.row.add([
-                    res.events.title,
-                    startShamsi,
-                    endShamsi,
-                    '<button type="button" class="btn btn-info futurelogInfoEditModal" data-info="' + res.events.id + ',' + res.events.title + ',' + res.events.start + ',' + res.events.end + '" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button> ' +
-                    '<button type="button" class="btn btn-danger futurelogInfoDelete" data-event-id="' + res.events.id + '">حذف</button>'
-                ]).draw().node();
-
-                // دادن id به سطر
-                $(rowNode).attr('id', 'item' + res.events.id);
-              },
-              error: function(error) {}
-            });
-          });
-          $('.default-form-class').trigger("reset");
-          $('#infoModal').modal('hide');
-        },
-        eventClick: function(info) {
-          var id = info.event.id;
-
-          if(confirm("از حذف رویداد مطمئن هستید؟")){
-            $.ajax({
+        if (confirm("از حذف رویداد مطمئن هستید؟")) {
+          $.ajax({
             url: 'events/' + id,
             type: "DELETE",
-            dateType: 'json',
+            dataType: 'json',
             success: function(response) {
               var event = window.calendar.getEventById(id);
-              if(event) event.remove();
+              if (event) event.remove();
               alert("رویداد حذف شد");
               var table = $('.events-datatable').DataTable();
-              
-              // پیدا کردن ردیف بر اساس attribute
-              table.rows().every(function(){
-                  var $btn = $(this.node()).find('.futurelogInfoDelete');
-                  if ($btn.data('event-id') == id) {
-                      this.remove();
-                  }
-              });
 
-                table.draw();
+              // پیدا کردن ردیف بر اساس attribute
+              table.rows().every(function() {
+                var $btn = $(this.node()).find('.futurelogInfoDelete');
+                if ($btn.data('event-id') == id) {
+                  this.remove();
+                }
+              });
+              table.draw();
             },
             error: function(error) {}
           });
-          }      
         }
-      });
-      window.calendar.render();
-
-      // بعد از بستن مدال، تب‌ها دوباره فعال شوند
-      $('#infoModal').on('hidden.bs.modal', function () {
-          $('#myTab button').removeClass('disabled').attr('disabled', false);
-          $('#myTabContent .tab-pane').removeClass('show active');
-          $('#event input[name="title"]').val('');
-          $('#event input[name="start"]').val('');
-          $('#event input[name="end"]').val('');
-      });
-
-  console.log('درون تابع', window.calendar);
-  console.log('بیرون تابع', window.calendar);
-
-  setTimeout(() => {
-    console.log('تاخیر', window.calendar);
-  }, 2000);
-
-
-  const editors = [];
-
-  function createCKEditor(elementId, val) {
-    if (editors[elementId]) {
-      editors[elementId].destroy();
-    }
-    // if(!editors[elementId]){
-    return ClassicEditor
-      .create(document.querySelector(elementId))
-      .then((editor) => {
-        editors[elementId] = editor;
-        if (val == null)
-          editors[elementId].setData('');
-        else
-          editors[elementId].setData(val);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    // } 
-  }
-
-  //Changing the information of notes , tasks and enents in the modal
-  $(document).on('click', '.futurelogInfoEditModal', function(e) {
-    $('.default-form-class').trigger("reset");
-    if ($(this).data('info')) {
-      var modal_data = $(this).data('info').split(',');
-      $("#event #event_id").val(modal_data[0]);
-      $("#event #title").val(modal_data[1]);
-      convertToShamsi(modal_data[2]).done(function(data) {
-        $('#event #start').val(data.covertMiladiToShansi);
-      });
-      convertToShamsi(modal_data[3]).done(function(data) {
-        $('#event #end').val(data.covertMiladiToShansi);
-      });
-      activaTab('#event');
-      return false;
-    }
-    if ($(this).data('note-info')) {
-      var modalData = $(this).data('note-info').split(',');
-      $('#note #note_id').val(modalData[0]);
-      $('#note #title').val(modalData[1]);
-      $('#note #description1').val(createCKEditor('#description1', modalData[2]));
-      activaTab('#note');
-      return false;
-    }
-    if ($(this).data('task-info')) {
-      var modalData = $(this).data('task-info').split(',');
-      $('#task #task_id').val(modalData[0]);
-      $('#task #title').val(modalData[1]);
-      $('#task #description2').val(createCKEditor('#description2', modalData[2]));
-      activaTab('#task');
-      return false;
-    }
-  });
-
-  // Activate tab while editing
-  function activaTab(tab) {
-    $("#infoModal .nav-link").addClass('disabled');
-    $('#infoModal .nav-tabs button[data-bs-target="' + tab + '"]').tab("show");
-    $("#infoModal .nav-link").filter('.active').removeClass('disabled');
-    return false;
-  };
-
-  // convert miladi to shamsi
-  function convertToShamsi(date) {
-    return $.ajax({
-      type: 'POST',
-      data: {
-        date: date
-      },
-      url: '{{route("convert_to_shamsi")}}',
-      dataType: 'JSON',
-      success: function(data) {}
+      }
     });
-  };
+    window.calendar.render();
+
+    // بعد از بستن مدال، تب‌ها دوباره فعال شوند
+    $('#infoModal').on('hidden.bs.modal', function() {
+      $('#myTab button').removeClass('disabled').attr('disabled', false);
+      $('#myTabContent .tab-pane').removeClass('show active');
+      $('#event input[name="title"]').val('');
+      $('#event input[name="start"]').val('');
+      $('#event input[name="end"]').val('');
+    });
+
+    console.log('درون تابع', window.calendar);
+    console.log('بیرون تابع', window.calendar);
+
+    setTimeout(() => {
+      console.log('تاخیر', window.calendar);
+    }, 2000);
+
+    const editors = [];
+
+    function createCKEditor(elementId, val) {
+      if (editors[elementId]) {
+        editors[elementId].destroy();
+      }
+      // if(!editors[elementId]){
+      return ClassicEditor
+        .create(document.querySelector(elementId))
+        .then((editor) => {
+          editors[elementId] = editor;
+          if (val == null)
+            editors[elementId].setData('');
+          else
+            editors[elementId].setData(val);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      // } 
+    }
+
+    //Changing the information of notes , tasks and enents in the modal
+    $(document).on('click', '.futurelogInfoEditModal', function(e) {
+      $('.default-form-class').trigger("reset");
+      if ($(this).data('info')) {
+        var modal_data = $(this).data('info').split(',');
+        $("#event #event_id").val(modal_data[0]);
+        $("#event #title").val(modal_data[1]);
+        convertToShamsi(modal_data[2]).done(function(data) {
+          $('#event #start').val(data.covertMiladiToShansi);
+        });
+        convertToShamsi(modal_data[3]).done(function(data) {
+          $('#event #end').val(data.covertMiladiToShansi);
+        });
+        activaTab('#event');
+        return false;
+      }
+      if ($(this).data('note-info')) {
+        var modalData = $(this).data('note-info').split(',');
+        $('#note #note_id').val(modalData[0]);
+        $('#note #title').val(modalData[1]);
+        $('#note #description1').val(createCKEditor('#description1', modalData[2]));
+        activaTab('#note');
+        return false;
+      }
+      if ($(this).data('task-info')) {
+        var modalData = $(this).data('task-info').split(',');
+        $('#task #task_id').val(modalData[0]);
+        $('#task #title').val(modalData[1]);
+        $('#task #description2').val(createCKEditor('#description2', modalData[2]));
+        activaTab('#task');
+        return false;
+      }
+    });
+
+    // Activate tab while editing
+    function activaTab(tab) {
+      $("#infoModal .nav-link").addClass('disabled');
+      $('#infoModal .nav-tabs button[data-bs-target="' + tab + '"]').tab("show");
+      $("#infoModal .nav-link").filter('.active').removeClass('disabled');
+      return false;
+    };
+
+    // convert miladi to shamsi
+    function convertToShamsi(date) {
+      return $.ajax({
+        type: 'POST',
+        data: {
+          date: date
+        },
+        url: '{{route("convert_to_shamsi")}}',
+        dataType: 'JSON',
+        success: function(data) {}
+      });
+    };
 
     var eventDataTable = $('.events-datatable').DataTable();
     var noteDataTable = $('.notes-datatable').DataTable();
@@ -433,7 +392,7 @@
       });
     });
 
-    //Edit an event using Async/Await to convert the date and update the eventDataTable
+    //Create|Edit an event using Async/Await to convert the date and update the eventDataTable
 
     $(document).on('click', '#saveBtn', function(e) {
       var formData = $('.test').serializeArray();
@@ -442,7 +401,7 @@
         value: collection_id
       });
       console.log(formData); // ببین event_id چی اومده
-      console.log('saveBtn clicked!');  
+      console.log('saveBtn clicked!');
       e.preventDefault();
       $.ajax({
         url: "{{ route('events.store') }}",
@@ -463,24 +422,24 @@
           '<button type="button" class="btn btn-info futurelogInfoEditModal" data-info="' + data.events.id + ',' + data.events.title + ',' + data.events.start + ',' + data.events.end + '" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button><span> </span><button type="button" class="btn btn-danger futurelogInfoDelete"  data-event-id="' + data.events.id + '">حذف</button>'
         ];
         if (eventDataTable.row('#item' + data.events.id).any()) {
-            // ویرایش
-            eventDataTable.row('#item' + data.events.id).data(arr).draw(false);
+          // ویرایش
+          eventDataTable.row('#item' + data.events.id).data(arr).draw(false);
         } else {
-            // اضافه کردن جدید
-            var rowNode = eventDataTable.row.add(arr).draw(false).node();
-            $(rowNode).attr('id', 'item' + data.events.id);
+          // اضافه کردن جدید
+          var rowNode = eventDataTable.row.add(arr).draw(false).node();
+          $(rowNode).attr('id', 'item' + data.events.id);
         }
         $('.default-form-class').trigger("reset");
         $('#infoModal').modal('hide');
         if (window.calendar) {
-          let event = window.calendar.getEventById(data.events.id);
+          let event = window.calendar.getEventById(String(data.events.id));
           if (event) {
             event.setProp('title', data.events.title);
             event.setStart(data.events.start);
             event.setEnd(data.events.end);
           } else {
             window.calendar.addEvent({
-              id: data.events.id,
+              id: String(data.events.id),
               title: data.events.title,
               start: data.events.start,
               end: data.events.end
@@ -615,6 +574,5 @@
       }
     });
   });
-
 </script>
 @endpush
