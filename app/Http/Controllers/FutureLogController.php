@@ -34,7 +34,9 @@ class FutureLogController extends Controller
             ])->get();
 
         // فقط برای کلندر (همه ایونت‌ها)
-        $data = Event::get(['id', 'title', 'start', 'end']);
+        $data = $current_collection->events()
+        ->select('id', 'title', 'start', 'end')
+        ->get();
 
         return view('future_logs.index', compact('data', 'info'));
     }
