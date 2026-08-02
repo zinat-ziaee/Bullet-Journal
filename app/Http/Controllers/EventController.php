@@ -19,7 +19,7 @@ class EventController extends Controller
   {
     $events = Event::updateOrCreate(
       [
-        'id' => $request->event_id
+        'id' => $request->filled('event_id') ? $request->event_id : null
       ],
       [
         'title' => $request->title,
