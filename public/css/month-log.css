@@ -1,0 +1,270 @@
+.month-log {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* Header */
+
+.month-log-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #fff;
+    padding: 18px 24px;
+    margin-bottom: 16px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+
+.month-title {
+    text-align: center;
+}
+
+.month-title h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.month-title span {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #777;
+}
+
+.month-nav-btn {
+    width: 42px;
+    height: 42px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f1f3f5;
+    cursor: pointer;
+
+    font-size: 24px;
+}
+
+
+/* Layout */
+
+.month-log-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 16px;
+}
+
+
+/* Cards */
+
+.month-days-card,
+.month-side-card,
+.monthly-review {
+    background: #fff;
+
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,.06);
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
+
+
+/* Section header */
+
+.section-header {
+    padding: 16px 18px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 17px;
+}
+
+
+/* Week */
+
+.week-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    background: #fafafa;
+
+    border-bottom: 1px solid #eee;
+}
+
+.week-days div {
+    padding: 10px 4px;
+
+    text-align: center;
+
+    font-size: 13px;
+    color: #777;
+}
+
+
+/* Days */
+
+.month-days {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 8px;
+
+    padding: 12px;
+}
+
+.month-day {
+    min-height: 90px;
+
+    background: #fff;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+
+    padding: 10px;
+
+    cursor: pointer;
+
+    text-align: right;
+
+    transition: .15s ease;
+}
+
+.month-day:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+
+.month-day.today {
+    border: 2px solid #6c63ff;
+}
+
+.day-number {
+    display: block;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.day-summary {
+    display: block;
+
+    margin-top: 10px;
+
+    font-size: 12px;
+    color: #777;
+}
+
+
+/* Sidebar */
+
+.month-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.month-side-card {
+    padding-bottom: 15px;
+}
+
+.monthly-items {
+    padding: 12px 16px;
+}
+
+.monthly-item {
+    display: flex;
+    gap: 8px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 14px;
+}
+
+.add-monthly-item {
+    margin: 0 16px;
+
+    width: calc(100% - 32px);
+
+    padding: 9px;
+
+    border: 1px dashed #aaa;
+    border-radius: 7px;
+
+    background: #fafafa;
+
+    cursor: pointer;
+}
+
+
+/* Review */
+
+.monthly-review {
+    margin-top: 16px;
+}
+
+.monthly-review-input {
+    display: block;
+
+    width: 100%;
+    min-height: 150px;
+
+    padding: 16px;
+
+    border: 0;
+    border-radius: 0 0 12px 12px;
+
+    resize: vertical;
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+
+    .month-log-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .month-sidebar {
+        order: 2;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .month-log-header {
+        padding: 12px;
+    }
+
+    .month-title h2 {
+        font-size: 18px;
+    }
+
+    .month-days {
+        gap: 4px;
+        padding: 6px;
+    }
+
+    .month-day {
+        min-height: 65px;
+        padding: 6px;
+    }
+
+    .week-days div {
+        font-size: 10px;
+    }
+
+}
