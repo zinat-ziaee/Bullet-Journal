@@ -11,7 +11,7 @@ class Event extends Model
 {
   use HasFactory;
   protected $dates = ['start', 'end'];
-  protected $fillable = ['name', 'start', 'end' ,'collection_id'];
+  protected $fillable = ['title', 'start', 'end' ,'collection_id'];
 
   public function collection(){
     return $this->belongsTo(Collection::class, 'collection_id');
