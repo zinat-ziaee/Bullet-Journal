@@ -9,6 +9,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/main.css') }}" rel='stylesheet'/>
+  <link href="{{ asset('css/month-log.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style-flex.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css" />
   <link href="{{ asset('css/majid-datepicker.css') }}" rel="stylesheet"/>
@@ -22,6 +23,7 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/persian-date.js') }}"></script> 
   <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js" ></script>
+  <script src="{{ asset('js/jalali-datepicker-init.js') }}"></script>
   <script src="{{ asset('js/ful.js') }}" ></script>
 
   @stack('scripts')

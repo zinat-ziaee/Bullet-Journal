@@ -1,20 +1,22 @@
 <?php
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Models\Collection;
-use GuzzleHttp\Middleware;
-use Illuminate\Support\Facades\Auth;
-use function PHPSTORM_META\exitPoint;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Artisan;
-// use Illuminate\Support\Facades\Request;
-use App\Http\Controllers\GoalController;
-use App\Http\Controllers\NoteController;
-use App\Http\Controllers\TaskController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FutureLogController;
 use App\Http\Controllers\GoalCategorizeController;
+use App\Http\Controllers\GoalController;
+use App\Http\Controllers\MonthLogController;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\TaskController;
+use App\Models\Collection;
+use Carbon\Carbon;
+// use Illuminate\Support\Facades\Request;
+use function PHPSTORM_META\exitPoint;
+use GuzzleHttp\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +61,10 @@ route::group(['middleware' => 'auth'], function () {
     Route::get('/', [FutureLogController::class, 'index'])->name('future_log');
     // Route::post('/info_note/store',[FutureLogController::class, 'storeNote'])->name('info_note');
     // Route::post('/info_event/store', [FutureLogController::class, 'storeEvent'])->name('info_event');
+  });
+
+  Route::prefix('month_logs')->group(function () {
+    Route::get('/', [MonthLogController::class, 'index'])->name('month_logs');
   });
 
   Route::resource('notes',NoteController::class,['only'=>['index','store','destroy']]);

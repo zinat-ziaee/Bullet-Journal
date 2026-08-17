@@ -135,29 +135,7 @@
 
     let collection_id = "{{$info[0]['id']}}";
 
-    jalaliDatepicker.startWatch({
-      time: false,
-      separatorChars: {
-        date: '-',
-        between: ' ',
-        time: ':'
-      }, // تنظیم جداکننده‌ها
-      persianDigits: true, // استفاده از اعداد فارسی
-      useDropDownYears: true,
-      autoShow: true,
-      hideAfterChange: true,
-      zIndex: 1060,
-    });
-
-    $(document).on('change', function(e) {
-      if (e.target.classList.contains('datetimepicker')) {
-        e.target.value = toPersian(e.target.value);
-      }
-    });
-
-    function toPersian(str) {
-      return str.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹' [d]);
-    }
+    initJalaliDatePicker();
 
     // Creating info in Modal
     $('#infoModal').on('show.bs.modal', function(e) {

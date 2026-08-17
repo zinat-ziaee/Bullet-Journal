@@ -13,7 +13,7 @@ return [
   ,
   'fixed_collections' => [
     ['route_name' => 'future_log', 'name' => 'آینده نگار'],
-    ['route_name' => 'home', 'name' => 'ماه نگار'],
+    ['route_name' => 'month_logs', 'name' => 'ماه نگار'],
     ['route_name' => 'home', 'name' => 'روز نگار']
   ],
   'info' => [
