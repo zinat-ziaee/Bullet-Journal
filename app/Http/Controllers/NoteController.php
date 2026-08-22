@@ -22,18 +22,33 @@ class NoteController extends Controller
         'collection_id' => $request->collection_id,
         'title' => $request->title,
         'description' => $request->description,
-        'log_date' => $this->isGregorian($request->log_date)
-                ? $request->log_date
-                : Carbon::miladi($request->log_date),
+        'log_date' => empty($request->log_date)
+                    ? null
+                    : (
+                        Carbon::hasFormat($request->log_date, 'Y-m-d')
+                            ? $request->log_date
+                            : Carbon::miladi($request->log_date)
+                    ),
       ]);
 
     return response()->json(['note' => $note]);
   }
 
-  public function destroy($noteId){
-    Note::find($noteId)->delete();
-    return response()->json([
-      'success' => 'Record deleted successfully!'
-    ]);
+  public function destroy($noteId)
+  {
+      $note = Note::find($noteId);
+
+      if (!$note) {
+          return response()->json([
+              'response' => 'Note not found',
+              'note_id' => $noteId
+          ], 404);
+      }
+
+      $note->delete();
+
+      return response()->json([
+          'response' => 'Record deleted successfully!'
+      ]);
   }
 }

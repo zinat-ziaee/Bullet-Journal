@@ -40,6 +40,7 @@
         <tr>
           <th>Title</th>
           <th>Description</th>
+          <th>log_date</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -48,8 +49,9 @@
         <tr id="noteItem{{$value['id']}}">
           <td>{{ $value['title'] }}</td>
           <td>{!! $value['description'] !!}</td>
+          <td>{{ Carbon\Carbon::shamsi($value['log_date']) }}</td>
           <td>
-            <button type="button" class="btn btn-info futurelogInfoEditModal" data-note-info="{{$value['id']}},{{$value['title']}},{{$value['description']}}" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button>
+            <button type="button" class="btn btn-info futurelogInfoEditModal" data-note-info="{{ urlencode(json_encode(['id' => $value['id'],'title' => $value['title'],'description' => $value['description'],'log_date' => $value['log_date'],])) }}" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button>
             <button type="button" class="btn btn-danger futurelogNoteDelete" data-note-id="{{ $value['id'] }}">حذف</button>
           </td>
         </tr>
@@ -98,8 +100,9 @@
       <thead>
         <tr>
           <th>Title</th>
-          <th>Action</th>
           <th>Description</th>
+          <th>log_date</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -107,8 +110,9 @@
         <tr id="taskItem{{$value['id']}}">
           <td>{{ $value['title'] }}</td>
           <td>{!! $value['description'] !!}</td>
+          <td>{{ Carbon\Carbon::shamsi($value['log_date']) }}</td>
           <td>
-            <button type="button" class="btn btn-info futurelogInfoEditModal" data-task-info="{{$value['id']}},{{$value['title']}},{{$value['description']}}" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button>
+            <button type="button" class="btn btn-info futurelogInfoEditModal" data-task-info="{{urlencode(json_encode(['id' => $value['id'],'title' => $value['title'],'description' => $value['description'],'log_date' => $value['log_date'],])) }}" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button>
             <button type="button" class="btn btn-danger futurelogTaskDelete" data-task-id="{{ $value['id'] }}">حذف</button>
           </td>
         </tr>
@@ -304,18 +308,35 @@
         return false;
       }
       if ($(this).data('note-info')) {
-        var modalData = $(this).data('note-info').split(',');
-        $('#note #note_id').val(modalData[0]);
-        $('#note #title').val(modalData[1]);
-        $('#note #description1').val(createCKEditor('#description1', modalData[2]));
+        var modalData = JSON.parse(decodeURIComponent($(this).attr('data-note-info').replace(/\+/g, '%20')));
+        $('#note #note_id').val(modalData.id);
+        $('#note #title').val(modalData.title);
+
+        createCKEditor('#description1', modalData.description);
+        if (modalData.log_date) { 
+          convertToShamsi(modalData.log_date).done(function(data) {
+              $('#note #note_log_date').val(data.covertMiladiToShansi);
+          });
+        }
+        else{
+          $('#note #note_log_date').val('');
+        }
         activaTab('#note');
         return false;
       }
       if ($(this).data('task-info')) {
-        var modalData = $(this).data('task-info').split(',');
-        $('#task #task_id').val(modalData[0]);
-        $('#task #title').val(modalData[1]);
-        $('#task #description2').val(createCKEditor('#description2', modalData[2]));
+        var modalData = JSON.parse(decodeURIComponent($(this).attr('data-task-info').replace(/\+/g, '%20')));
+        $('#task #task_id').val(modalData.id);
+        $('#task #title').val(modalData.title);
+        $('#task #description2').val(createCKEditor('#description2', modalData.description));
+        if (modalData.log_date) { 
+          convertToShamsi(modalData.log_date).done(function(data) {
+            $('#task #task_log_date').val(data.covertMiladiToShansi);
+          });
+        }
+        else {
+            $('#task #task_log_date').val('');
+        }
         activaTab('#task');
         return false;
       }
@@ -343,7 +364,7 @@
     };
 
     var eventDataTable = $('.events-datatable').DataTable();
-    var noteDataTable = $('.notes-datatable').DataTable();
+    var noteDataTable = $('.notes-datatable').DataTable();            
     var taskDataTable = $('.tasks-datatable').DataTable();
 
     //Delete an event
@@ -435,19 +456,20 @@
         url: 'notes/' + noteId,
         type: 'DELETE',
         data: noteId,
-        success: function() {
+        success: function(response) {
           if (noteDataTable.row('#noteItem' + noteId).id()) {
             noteDataTable.row("#noteItem" + noteId).remove().draw();
           }
         },
-        error: function(status) {
-          console.log(status);
+        error: function(xhr, status, error) {
+          console.error("خطا در حذف یادداشت:", error);
         }
       });
     });
 
     //Create|Edit an note using Async/Await to update the noteDataTable
     $(document).on('click', '#saveNode', function(e) {
+      console.count('SAVE NODE CLICK');
       var formNode = $('.formNode').serializeArray();
       //get data of ck editor and change
       var ck__description = editors['#description1'].getData();
@@ -462,6 +484,7 @@
       });
       console.log(formNode[4].value);
       e.preventDefault();
+      console.log('POST note');
       //create|edit an note
       $.ajax({
         url: "{{ route('notes.store') }}",
@@ -471,18 +494,40 @@
         success: noteDataTableUpdate
       });
       async function noteDataTableUpdate(data) {
-        createCKEditor('#description1', data.note.description)
+        let log_date = '';
+        if (data.note.log_date) {
+          let log_dateFromServer = await convertToShamsi(data.note.log_date);
+          log_date = log_dateFromServer.covertMiladiToShansi;
+        }
+        createCKEditor('#description1', data.note.description);
+        const noteInfo = JSON.stringify({
+          id: data.note.id,
+          title: data.note.title,
+          description: editors['#description1'].getData(),
+          log_date: data.note.log_date
+        });
         const note = [
           data.note.title,
           editors['#description1'].getData(),
-          '<button type="button" class="btn btn-info futurelogInfoEditModal" data-note-info="' + data.note.id + ',' + data.note.title + ',' + editors['#description1'].getData() + '" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button><span> </span><button type="button" class="btn btn-danger futurelogNoteDelete" data-note-id="' + data.note.id + '" >حذف</button>'
+          log_date,
+          '<button type="button" class="btn btn-info futurelogInfoEditModal" ' +
+          'data-note-info="' + encodeURIComponent(noteInfo) + '" ' +
+          'data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button>' +
+          '<span> </span>' +
+          '<button type="button" class="btn btn-danger futurelogNoteDelete" ' +
+          'data-note-id="' + data.note.id + '">حذف</button>'
         ];
 
-        if (noteDataTable.row('#noteItem' + data.note.id).id()) {
-          noteDataTable.row('#noteItem' + data.note.id).data(note).draw();
+        noteDataTable.rows().every(function () {
+          console.log('ROW DOM ID:', this.node().id);
+        });
+
+        if (noteDataTable.row('#noteItem' + data.note.id).any()) {
+          // ویرایش
+          noteDataTable.row('#noteItem' + data.note.id).data(note).draw(false);
         } else {
-          noteDataTable.row.add(note).draw();
-          var rowNode = noteDataTable.row(':last-child').node();
+          // اضافه کردن جدید
+          var rowNode = noteDataTable.row.add(note).draw(false).node();
           $(rowNode).attr('id', 'noteItem' + data.note.id);
         }
         $('.default-form-class').trigger("reset");
@@ -498,13 +543,13 @@
         url: 'tasks/' + taskId,
         type: 'DELETE',
         data: taskId,
-        success: function() {
+        success: function(response) {
           if (taskDataTable.row('#taskItem' + taskId).id()) {
             taskDataTable.row("#taskItem" + taskId).remove().draw();
           }
         },
-        error: function(status) {
-          console.log(status);
+        error: function(xhr, status, error) {
+          console.error("خطا در حذف تسک:", error);
         }
       });
     });
@@ -533,20 +578,39 @@
         success: taskDataTableUpadate
       });
       async function taskDataTableUpadate(data) {
+        let log_date = '';
+        if (data.task.log_date) {
+            let log_dateFromServer = await convertToShamsi(data.task.log_date);
+            log_date = log_dateFromServer.covertMiladiToShansi;
+        }
         createCKEditor('#description2', data.task.description);
+        const taskInfo = JSON.stringify({
+          id: data.task.id,
+          title: data.task.title,
+          description: editors['#description2'].getData(),
+          log_date: data.task.log_date
+        });
         const task = [
           data.task.title,
           editors['#description2'].getData(),
-          '<button type="button" class="btn btn-info futurelogInfoEditModal" data-task-info="' + data.task.id + ',' + data.task.title + ',' + editors['#description2'].getData() + '" data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button><span> <span/><button type="button" class="btn btn-danger futurelogTaskDelete" data-task-id="' + data.task.id + '">حذف</button>'
+          log_date,
+          '<button type="button" class="btn btn-info futurelogInfoEditModal" ' +
+          'data-task-info="' + encodeURIComponent(taskInfo) + '" ' +
+          'data-bs-toggle="modal" data-bs-target="#infoModal">ویرایش</button>' +
+          '<span> </span>' +
+          '<button type="button" class="btn btn-danger futurelogTaskDelete" ' +
+          'data-task-id="' + data.task.id + '">حذف</button>'
         ];
 
-        if (taskDataTable.row('#taskItem' + data.task.id).id()) {
-          taskDataTable.row('#taskItem' + data.task.id).data(task).draw();
+        if (taskDataTable.row('#taskItem' + data.task.id).any()) {
+          // ویرایش
+          taskDataTable.row('#taskItem' + data.task.id).data(task).draw(false);
         } else {
-          taskDataTable.row.add(task).draw();
-          var rowNodTask = taskDataTable.row(':last-child').node();
-          $(rowNodTask).attr('id', 'taskItem' + data.task.id);
+          // اضافه کردن جدید
+          var rowNode = taskDataTable.row.add(task).draw(false).node();
+          $(rowNode).attr('id', 'taskItem' + data.task.id);
         }
+
         $('.default-form-class').trigger('reset');
         $('#infoModal').modal('hide');
       }
