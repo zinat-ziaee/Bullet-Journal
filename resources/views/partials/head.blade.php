@@ -9,8 +9,13 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/main.css') }}" rel='stylesheet'/>
+  <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/header.css') }}" rel="stylesheet">
   <link href="{{ asset('css/month-log.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/style-flex.css') }}" rel="stylesheet">
+  <link
+    href="{{ asset('css/day-log.css') }}?v={{ filemtime(public_path('css/day-log.css')) }}"
+    rel="stylesheet">
+  <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css" />
   <link href="{{ asset('css/majid-datepicker.css') }}" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
@@ -23,9 +28,19 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/persian-date.js') }}"></script> 
   <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js" ></script>
-  <script src="{{ asset('js/jalali-datepicker-init.js') }}"></script>
+  <script src="{{ asset('js/common/jalali-datepicker-init.js') }}"></script>
   <script src="{{ asset('js/ful.js') }}" ></script>
-
+  <script>
+    window.appRoutes = {
+        convertToShamsi: "{{ route('convert_to_shamsi') }}"
+    };
+  </script>
+  <script src="{{ asset('js/common/date-api.js') }}"></script>
+  <script src="{{ asset('js/common/editor.js') }}"></script>
+  <script src="{{ asset('js/ui/common-ui.js') }}"></script>
+  <script src="{{ asset('js/ui/sidebar.js') }}"></script>
+  <script src="{{ asset('js/common/log-edit-modal.js') }}"></script>
+  <script src="{{ asset('js/api/logs.js') }}"></script>
   @stack('scripts')
 
  

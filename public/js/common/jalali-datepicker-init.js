@@ -15,7 +15,7 @@ function initJalaliDatePicker() {
       useDropDownYears: true,
       autoShow: true,
       hideAfterChange: true,
-      zIndex: 1060
+      zIndex: 10000
   });
 }
 

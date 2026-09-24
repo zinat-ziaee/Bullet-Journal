@@ -14696,6 +14696,7 @@ var FullCalendar = (function (exports) {
         // inject it after the querystring but before the fragment
         return url.replace(/(\?.*?)?(#|$)/, function (whole, qs, hash) { return (qs ? qs + '&' : '?') + component + hash; });
     }
+
     var googleCalendarPlugin = createPlugin({
         eventSourceDefs: [eventSourceDef],
         optionRefiners: OPTION_REFINERS,
@@ -14957,3 +14958,4 @@ var FullCalendar = (function (exports) {
     return exports;
 
 }({}));
+
