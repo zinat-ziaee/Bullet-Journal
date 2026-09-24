@@ -36,7 +36,7 @@ class Collection extends Model
   //   return (isset(self::getInfoTypeList()[$this->type]) ? self::getInfoTypeList()[$this->type] : 'نامشخص');
   // }
 
-  protected static function getItems(){
+  public static function getItems(){
     return self::where('user_id', auth()->user()->id)->get();
   }
 
@@ -50,16 +50,21 @@ class Collection extends Model
   {
     $fixed_collections = collect(Config::get('settings.fixed_collections'));
     return $fixed_collections->where('name','=', $name)->pluck('route_name')->first();
-
-    // $collection = self::all();
-    // $fixed_collections = collect(Config::get('app.settings.fixed_collections'))->where(function ($query) use ($collection) {
-    //   return $query['name'] == $collection['name'];
-    // })->first();
   }
-
-  public function getTitleAttribute($key)
+  
+  public static function getFixedByRoute(string $routeName)
   {
+      $name = self::getNameCollection($routeName);
+
+      return self::where('user_id', auth()->id())
+          ->where('name', $name)
+          ->where('is_fixed', true)
+          ->first();
   }
+
+
+  
+
 
   public function notes()
   {
