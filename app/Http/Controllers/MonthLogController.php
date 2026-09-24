@@ -32,11 +32,41 @@ class MonthLogController extends Controller
             $collectionId
         );
 
-
         return view('month_logs.index', compact(
             'calendar',
             'days',
             'collectionId'
         ));
+    }
+    public function dayData(Request $request, MonthLogService $monthLogService)
+    {
+        $calendar = new CalendarService(
+            $request->year,
+            $request->month
+        );
+
+        $days = $monthLogService->getMonthData(
+            $calendar,
+            $request->collection_id
+        );
+
+        $day = collect($days)->firstWhere(
+            'date',
+            $request->date
+        );
+
+        if (!$day) {
+            return response()->json([
+                'message' => 'اطلاعات این روز پیدا نشد.'
+            ], 404);
+        }
+
+        return response()->json([
+            'date' => $day['date'],
+            'day' => $day['day'],
+            'tasks' => $day['tasks']->values(),
+            'notes' => $day['notes']->values(),
+            'events' => $day['events']->values(),
+        ]);
     }
 }

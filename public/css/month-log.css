@@ -1,3 +1,7 @@
+/* =========================================================
+   MONTH LOG
+========================================================= */
+
 .month-log {
     width: 100%;
     max-width: 1400px;
@@ -5,39 +9,45 @@
 }
 
 
-/* Header */
+/* =========================================================
+   MONTH HEADER
+========================================================= */
 
 .month-log-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    width: 100%;
+
     background: #fff;
-    padding: 18px 24px;
+
+    padding: 16px 22px;
     margin-bottom: 16px;
 
     border-radius: 12px;
-    border: 1px solid rgba(0,0,0,.06);
-    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    border: 1px solid rgba(0, 0, 0, .06);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
 }
 
 .month-title {
+    flex: 1;
     text-align: center;
 }
 
 .month-title h2 {
     margin: 0;
-    font-size: 22px;
-}
 
-.month-title span {
-    display: block;
-    margin-top: 5px;
-    font-size: 13px;
-    color: #777;
+    font-size: 22px;
+    font-weight: 700;
 }
 
 .month-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 42px;
     height: 42px;
 
@@ -45,36 +55,61 @@
     border-radius: 8px;
 
     background: #f1f3f5;
+
+    color: #333;
+    text-decoration: none;
+
     cursor: pointer;
 
-    font-size: 24px;
+    font-size: 26px;
+    line-height: 1;
+
+    transition: .15s ease;
+}
+
+.month-nav-btn:hover {
+    background: #e5e7eb;
+    color: #111;
+
+    transform: translateY(-1px);
 }
 
 
-/* Layout */
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
 
 .month-log-layout {
-    display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
-    gap: 16px;
+    position: relative;
+
+    width: 100%;
 }
 
 
-/* Cards */
+/* =========================================================
+   DAYS CARD
+========================================================= */
 
-.month-days-card,
-.month-side-card,
-.monthly-review {
+.month-days-card {
+    position: relative;
+
+    width: 100%;
+
     background: #fff;
 
     border-radius: 12px;
-    border: 1px solid rgba(0,0,0,.06);
 
-    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    border: 1px solid rgba(0, 0, 0, .06);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
 }
 
 
-/* Section header */
+/* =========================================================
+   SECTION HEADER
+========================================================= */
 
 .section-header {
     padding: 16px 18px;
@@ -84,15 +119,74 @@
 
 .section-header h3 {
     margin: 0;
+
     font-size: 17px;
+    font-weight: 600;
 }
 
 
-/* Week */
+/* =========================================================
+   DAYS HEADER
+========================================================= */
+
+.month-days-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 58px;
+}
+
+
+/* =========================================================
+   SIDEBAR OPEN BUTTON
+========================================================= */
+
+.month-sidebar-toggle {
+    display: block;
+
+    padding: 7px 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 7px;
+
+    background: #f8f9fa;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    transition: .15s ease;
+}
+
+.month-sidebar-toggle:hover {
+    background: #e9ecef;
+}
+
+
+/*
+   وقتی ساید باز است،
+   دکمه باز کردن مخفی می‌شود
+*/
+.month-log-layout:not(.sidebar-closed)
+.month-sidebar-toggle {
+    display: none;
+}
+
+
+/* =========================================================
+   WEEK DAYS
+========================================================= */
 
 .week-days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    width: 100%;
 
     background: #fafafa;
 
@@ -100,81 +194,288 @@
 }
 
 .week-days div {
+    min-width: 0;
+
     padding: 10px 4px;
 
     text-align: center;
 
     font-size: 13px;
+    font-weight: 500;
+
     color: #777;
+
+    white-space: nowrap;
 }
 
 
-/* Days */
+/* =========================================================
+   MONTH DAYS GRID
+========================================================= */
 
 .month-days {
     display: grid;
 
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
 
     gap: 8px;
 
+    width: 100%;
+
     padding: 12px;
+
+    box-sizing: border-box;
 }
 
+
+/* =========================================================
+   EMPTY DAYS
+========================================================= */
+
+.empty-day {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   DAY
+========================================================= */
+
 .month-day {
-    min-height: 90px;
+    display: block;
+
+    min-width: 0;
+
+    width: 100%;
+
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+
+    padding: 10px;
+
+    box-sizing: border-box;
 
     background: #fff;
 
     border: 1px solid #e5e5e5;
-    border-radius: 8px;
 
-    padding: 10px;
+    border-radius: 8px;
 
     cursor: pointer;
 
     text-align: right;
 
-    transition: .15s ease;
+    overflow: hidden;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        border-color .15s ease;
 }
 
 .month-day:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, .08);
 }
 
 .month-day.today {
     border: 2px solid #6c63ff;
 }
 
+
+/* =========================================================
+   DAY NUMBER
+========================================================= */
+
 .day-number {
     display: block;
 
+    width: 100%;
+
+    text-align: right;
+
+    direction: rtl;
+
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    color: #333;
 }
 
-.day-summary {
+
+/* =========================================================
+   ITEMS INSIDE DAY CARD
+========================================================= */
+
+.day-items {
     display: block;
 
-    margin-top: 10px;
+    width: 100%;
+
+    margin-top: 8px;
+
+    text-align: right;
 
     font-size: 12px;
+
+    line-height: 1.7;
+
+    max-height: 65px;
+
+    overflow: hidden;
+}
+
+.day-item-title {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    text-align: right;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.day-more {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 2px;
+
+    text-align: right;
+
     color: #777;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
 
-/* Sidebar */
+/* =========================================================
+   GOALS SIDEBAR
+========================================================= */
 
 .month-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 300px;
+
+    z-index: 1000;
+
+    display: none;
 }
 
-.month-side-card {
-    padding-bottom: 15px;
+
+/*
+   فقط وقتی sidebar باز است نمایش داده شود
+*/
+.month-log-layout:not(.sidebar-closed)
+.month-sidebar {
+    display: block;
 }
+
+
+/* =========================================================
+   SIDEBAR CARD
+========================================================= */
+
+.month-side-card {
+    width: 100%;
+
+    background: #fff;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(0, 0, 0, .06);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .14);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
+
+.month-sidebar-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 14px 16px;
+}
+
+.month-sidebar-header h3 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   SIDEBAR CLOSE
+========================================================= */
+
+.month-sidebar-close {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background: #f1f3f5;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    transition: .15s ease;
+}
+
+.month-sidebar-close:hover {
+    background: #e5e7eb;
+}
+
+
+/* =========================================================
+   MONTHLY ITEMS
+========================================================= */
 
 .monthly-items {
     padding: 12px 16px;
@@ -182,6 +483,9 @@
 
 .monthly-item {
     display: flex;
+
+    align-items: center;
+
     gap: 8px;
 
     padding: 10px 0;
@@ -191,53 +495,431 @@
     font-size: 14px;
 }
 
+.monthly-item:last-child {
+    border-bottom: 0;
+}
+
+
+/* =========================================================
+   ADD MONTHLY ITEM
+========================================================= */
+
 .add-monthly-item {
-    margin: 0 16px;
+    display: block;
 
     width: calc(100% - 32px);
+
+    margin: 0 16px 15px;
 
     padding: 9px;
 
     border: 1px dashed #aaa;
+
     border-radius: 7px;
 
     background: #fafafa;
 
+    color: #444;
+
     cursor: pointer;
+
+    font-size: 13px;
+
+    transition: .15s ease;
+}
+
+.add-monthly-item:hover {
+    background: #f1f3f5;
 }
 
 
-/* Review */
+/* =========================================================
+   MONTHLY REVIEW
+========================================================= */
 
 .monthly-review {
+    width: 100%;
+
     margin-top: 16px;
+
+    background: #fff;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(0, 0, 0, .06);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
 }
 
 .monthly-review-input {
     display: block;
 
     width: 100%;
+
     min-height: 150px;
 
     padding: 16px;
 
+    box-sizing: border-box;
+
     border: 0;
-    border-radius: 0 0 12px 12px;
+
+    outline: none;
 
     resize: vertical;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    background: #fff;
+}
+
+.monthly-review-input:focus {
+    box-shadow:
+        inset 0 0 0 1px #ddd;
 }
 
 
-/* Responsive */
+/* =========================================================
+   DAY DETAILS OVERLAY
+========================================================= */
+
+.day-details-overlay {
+    display: none;
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background: rgba(248, 246, 242, .98);
+
+    align-items: center;
+    justify-content: center;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   DAY OVERLAY CARD
+========================================================= */
+
+.day-overlay-card {
+    width: 100%;
+
+    max-width: 850px;
+
+    max-height: 90%;
+
+    background: #fff;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(0, 0, 0, .06);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .15);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DAY OVERLAY HEADER
+========================================================= */
+
+.day-overlay-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 15px 18px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.day-overlay-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+.day-overlay-title strong {
+    font-size: 18px;
+}
+
+.day-overlay-title span {
+    font-size: 13px;
+
+    color: #777;
+}
+
+.day-overlay-header-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   ADD DAY BUTTON
+========================================================= */
+
+.day-add-btn {
+    border: 0;
+
+    border-radius: 8px;
+
+    padding: 8px 14px;
+
+    background: #f1f3f5;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition: .15s ease;
+}
+
+.day-add-btn:hover {
+    background: #e5e7eb;
+}
+
+
+/* =========================================================
+   CLOSE DAY OVERLAY
+========================================================= */
+
+.day-overlay-close {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: #f1f3f5;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    line-height: 1;
+}
+
+.day-overlay-close:hover {
+    background: #e5e7eb;
+}
+
+
+/* =========================================================
+   DAY OVERLAY CONTENT
+========================================================= */
+
+.day-overlay-content {
+    padding: 18px;
+
+    max-height: 70vh;
+
+    overflow-y: auto;
+}
+
+.day-overlay-section {
+    margin-bottom: 20px;
+}
+
+.day-overlay-section:last-child {
+    margin-bottom: 0;
+}
+
+.day-overlay-section h4 {
+    margin: 0 0 10px;
+
+    padding-bottom: 8px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   DAY ITEMS IN OVERLAY
+========================================================= */
+
+.day-item {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #f0f0f0;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TITLE INSIDE OVERLAY
+========================================================= */
+
+.day-item-title {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DESCRIPTION INSIDE OVERLAY
+========================================================= */
+
+.day-item-description {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 6px;
+
+    color: #666;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ACTIONS INSIDE OVERLAY
+========================================================= */
+
+.day-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 8px;
+
+    width: 100%;
+
+    flex-shrink: 0;
+}
+
+.day-actions button {
+    width: 50px;
+    height: 28px;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background: #f3f3f3;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ITEM DATE
+========================================================= */
+
+.day-item-date {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #888;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 900px) {
 
-    .month-log-layout {
-        grid-template-columns: 1fr;
+    .month-sidebar {
+        width: min(300px, 85vw);
     }
 
-    .month-sidebar {
-        order: 2;
+    .month-days {
+        gap: 5px;
+        padding: 8px;
+    }
+
+    .month-day {
+        height: 85px;
+        min-height: 85px;
+        max-height: 85px;
+
+        padding: 7px;
+    }
+
+    .day-items {
+        font-size: 11px;
     }
 
 }
@@ -253,18 +935,112 @@
         font-size: 18px;
     }
 
-    .month-days {
-        gap: 4px;
-        padding: 6px;
+    .month-nav-btn {
+        width: 36px;
+        height: 36px;
+
+        font-size: 22px;
     }
 
-    .month-day {
-        min-height: 65px;
-        padding: 6px;
+    .section-header {
+        padding: 12px;
     }
 
-    .week-days div {
+    .month-days-header h3 {
+        font-size: 15px;
+    }
+
+    .month-sidebar-toggle {
+        padding: 6px 9px;
+
         font-size: 10px;
     }
 
+    .week-days div {
+        padding: 8px 2px;
+
+        font-size: 9px;
+    }
+
+    .month-days {
+        gap: 3px;
+        padding: 5px;
+    }
+
+    .month-day {
+        height: 72px;
+        min-height: 72px;
+        max-height: 72px;
+
+        padding: 5px;
+
+        border-radius: 6px;
+    }
+
+    .day-number {
+        font-size: 13px;
+    }
+
+    .day-items {
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        line-height: 1.45;
+
+        max-height: 42px;
+    }
+
+    .day-more {
+        font-size: 9px;
+    }
+
+    .month-sidebar {
+        width: 85vw;
+    }
+
+    .day-details-overlay {
+        padding: 10px;
+    }
+
+    .day-overlay-header {
+        padding: 12px;
+    }
+
+    .day-overlay-content {
+        padding: 12px;
+    }
+
 }
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .week-days div {
+        font-size: 8px;
+    }
+
+    .month-day {
+        height: 65px;
+        min-height: 65px;
+        max-height: 65px;
+
+        padding: 4px;
+    }
+
+    .day-number {
+        font-size: 12px;
+    }
+
+    .day-items {
+        font-size: 8px;
+
+        max-height: 37px;
+    }
+
+}
+
