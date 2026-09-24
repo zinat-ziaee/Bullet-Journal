@@ -1,36 +1,65 @@
 @extends('layouts.master')
 
-@section('title','home')
+@section('title', 'خانه')
 
-@push('styles')
-<!-- <link rel="stylesheet" href="/assets/css/style.css" /> -->
-<style>
-  /* css code */
-</style>
-@endpush
+@section('content')
 
-@section('container')
-@section('sidebar')
-@include('partials.sidebar')
-@parent
-<!-- Includes parent sidebar -->
-<!-- <p>Aboute us page sidebar</p> -->
-@if(Auth::user())
-  @php
-    \Artisan::call('db:seed', [
-      '--class' => 'CollectionsTableSeeder',
-      '--force'   => true
-    ]);
-  @endphp
-@endif
-@stop
+<div class="dashboard">
 
-<!-- <div class="">
-	<div class="item item1 header">header</div>
-	<div class="item item2 aside aside1">aside1</div>
-	<div class="item item3 main">main</div>
-	<div class="item item4 aside aside2">aside2</div>
-	<div class="item item5 footer">footer</div>
-</div> -->
+    {{-- خوش‌آمدگویی --}}
+    <section class="dashboard-welcome">
+        <h1>
+            سلام {{ Auth::user()->name }} 🌱
+        </h1>
+
+        <p>
+            امروزت را از اینجا شروع کن.
+        </p>
+    </section>
 
 
+    {{-- محتوای اصلی --}}
+    <div class="dashboard-grid">
+
+        {{-- امروز --}}
+        <section class="dashboard-card">
+            <h2>امروز</h2>
+
+            <p class="dashboard-empty">
+                هنوز چیزی برای امروز ثبت نکرده‌ای.
+            </p>
+
+            <button type="button" class="dashboard-action">
+                + ثبت اولین یادداشت
+            </button>
+        </section>
+
+
+        {{-- کارهای امروز --}}
+        <section class="dashboard-card">
+            <h2>کارهای امروز</h2>
+
+            <p class="dashboard-empty">
+                هنوز کاری برای امروز ثبت نشده است.
+            </p>
+
+            <button type="button" class="dashboard-action">
+                + افزودن کار
+            </button>
+        </section>
+
+
+        {{-- مجموعه‌ها --}}
+        <section class="dashboard-card dashboard-card-wide">
+            <h2>مجموعه‌های من</h2>
+
+            <p class="dashboard-empty">
+                مجموعه‌های خودت را از منوی کناری مدیریت کن.
+            </p>
+        </section>
+
+    </div>
+
+</div>
+
+@endsection
