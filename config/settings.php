@@ -11,11 +11,11 @@ return [
     8 => ['name' => 'Cancelled', 'icon' => '✕'],
   ]
   ,
-  'fixed_collections' => [
-    ['route_name' => 'future_log', 'name' => 'آینده نگار'],
-    ['route_name' => 'month_logs', 'name' => 'ماه نگار'],
-    ['route_name' => 'home', 'name' => 'روز نگار']
-  ],
+    'fixed_collections' => [
+      ['route_name' => 'future_log', 'name' => 'آینده نگار'],
+      ['route_name' => 'month_logs', 'name' => 'ماه نگار'],
+      ['route_name' => 'day_log', 'name' => 'روز نگار']
+    ],
   'info' => [
     'event' => 'رویداد',
     'note' => 'یادداشت',
